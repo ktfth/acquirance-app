@@ -1,0 +1,41 @@
+<style>
+  #products {
+    padding: 10px 0 10px;
+    /* border-top: 1px solid #d4d4d4; */
+    border-bottom: 1px solid #d4d4d4;
+  }
+</style>
+<body>
+  <input placeholder="Produto" id="product">
+  <ul id="products"></ul>
+  <h4 id="productsPriceTotal">Total: R$ 0.00</h4>
+</body>
+<script>
+  var product = '';
+  var refProductPriceTotal = 0.0;
+
+  document.getElementById('product').onkeypress = function (e) {
+    var that = this;
+    product += e.key
+    if (e.keyCode === 13) {
+      var li = document.createElement('li');
+      var productLabel = document.getElementById('product').value;
+      var actualValueOfPrice = null;
+      var currencySymbol = 'R$';
+      var initialIndexOfProductLabel = productLabel.indexOf(currencySymbol) + 2;
+      var firstStepOfProductLabel = productLabel.length;
+      actualValueOfPrice = productLabel.slice(initialIndexOfProductLabel,
+                                              firstStepOfProductLabel);
+      refProductPriceTotal += parseFloat(actualValueOfPrice, 10);
+      li.innerHTML = productLabel;
+      document.getElementById('products').appendChild(li);
+      li = null;
+      product = '';
+      that.value = '';
+      document.getElementById('productsPriceTotal')
+              .innerHTML = 'Total: R$ ' +
+                           refProductPriceTotal;
+      actualValueOfPrice = null;
+    }
+  }
+</script>
